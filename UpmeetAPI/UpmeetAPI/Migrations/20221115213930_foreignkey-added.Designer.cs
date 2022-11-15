@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UpmeetAPI.DbModels;
 
@@ -11,9 +12,10 @@ using UpmeetAPI.DbModels;
 namespace UpmeetAPI.Migrations
 {
     [DbContext(typeof(UpmeetDbContext))]
-    partial class UpmeetDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221115213930_foreignkey-added")]
+    partial class foreignkeyadded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

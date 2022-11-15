@@ -7,8 +7,10 @@ namespace UpmeetAPI.DbModels
     {
         [Key]
         public int Id { get; set; }
-        [ForeignKey("Event")]
-        public int EventId { get; set; }
         public string UserId { get; set; }
+        public int? EventId { get; set; }
+
+        [ForeignKey("EventId")]
+        public virtual Event Event { get; set; }
     }
 }
