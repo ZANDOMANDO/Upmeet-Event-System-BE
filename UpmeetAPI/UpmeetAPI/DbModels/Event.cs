@@ -13,7 +13,6 @@ namespace UpmeetAPI.DbModels
         public string Venue { get; set; }
         public decimal Price { get; set; }
         public bool Favorite { get; set; }
-
         public string EventDateTime { get; set; }
         public string EventCategory { get; set; }
         public string ContactInfo { get; set; }
