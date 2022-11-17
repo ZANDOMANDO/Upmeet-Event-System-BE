@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +22,7 @@ namespace UpmeetAPI.Controllers
         }
 
         // GET: api/Events
-        [HttpGet]
+        [HttpGet("events")]
         public async Task<ActionResult<IEnumerable<Event>>> GetEvents()
         {
             return await _context.Events.ToListAsync();
@@ -74,26 +75,40 @@ namespace UpmeetAPI.Controllers
 
         // POST: api/Events
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Event>> PostEvent(Event @event)
+        [HttpPost("addNew")]
+        public async Task<Event> PostEvent(Event e)
         {
-            _context.Events.Add(@event);
+            _context.Events.Add(e);
             await _context.SaveChangesAsync();
+            return e;
 
-            return CreatedAtAction("GetEvent", new { id = @event.Id }, @event);
+           // return CreatedAtAction("GetEvent", new { id = event.Id }, event);
         }
+        [HttpGet("bookmark/{id}/{userID}")]
+        public async Task<FavoritedEvent> Bookmark(int id, string userID)
+        {
+            FavoritedEvent bookmark = new FavoritedEvent()
+            {
+                 EventId = id,
+                 UserId = userID
+            };
+            _context.FavoritedEvents.Add(bookmark);
+           // Console.WriteLine("event added to favorites!");
+            _context.SaveChanges();
+            return bookmark;
 
+        }
         // DELETE: api/Events/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEvent(int id)
         {
-            var @event = await _context.Events.FindAsync(id);
-            if (@event == null)
+            var e = await _context.Events.FindAsync(id);
+            if (e == null)
             {
                 return NotFound();
             }
 
-            _context.Events.Remove(@event);
+            _context.Events.Remove(e);
             await _context.SaveChangesAsync();
 
             return NoContent();
